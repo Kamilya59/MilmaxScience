@@ -1,0 +1,67 @@
+﻿@model MilmaxScience.Models.Event
+
+@{
+    ViewData["Title"] = "Подробнее о мероприятии";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <h2 class="mb-4 text-center">Подробнее о мероприятии</h2>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">Название</dt>
+                <dd class="col-sm-9">@Model.Title</dd>
+
+                <dt class="col-sm-3">Краткое описание</dt>
+                <dd class="col-sm-9">@Model.ShortDescription</dd>
+
+                <dt class="col-sm-3">Полное описание</dt>
+                <dd class="col-sm-9">@Model.FullDescription</dd>
+
+                <dt class="col-sm-3">Дата и время</dt>
+                <dd class="col-sm-9">@Model.EventDateTime</dd>
+
+                <dt class="col-sm-3">Максимум участников</dt>
+                <dd class="col-sm-9">@Model.MaxParticipants</dd>
+
+                <dt class="col-sm-3">Город</dt>
+                <dd class="col-sm-9">@Model.City?.Name</dd>
+
+                <dt class="col-sm-3">Спикер</dt>
+                <dd class="col-sm-9">@Model.Speaker?.FullName</dd>
+
+                <dt class="col-sm-3">Категория</dt>
+                <dd class="col-sm-9">@Model.EventType?.Name</dd>
+
+                <dt class="col-sm-3">Организатор</dt>
+                <dd class="col-sm-9">@Model.Organiser?.Name</dd>
+
+            </dl>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Edit"
+                       asp-route-id="@Model?.Id"
+                       class="btn btn-dark">
+                        Редактировать
+                    </a>
+                }
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="btn btn-outline-dark">
+                    Назад
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>

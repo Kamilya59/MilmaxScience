@@ -1,0 +1,26 @@
+﻿@model IEnumerable<MilmaxScience.Models.City>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white"
+       href="#"
+       id="citiesDropdown"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+        Города
+    </a>
+
+    <ul class="dropdown-menu text-white">
+        @foreach (var city in Model)
+        {
+            <li>
+                <a class="dropdown-item"
+                   asp-controller="Home"
+                   asp-action="Index"
+                   asp-route-cityId="@city.Id">
+                    @city.Name
+                </a>
+            </li>
+        }
+    </ul>
+</li>

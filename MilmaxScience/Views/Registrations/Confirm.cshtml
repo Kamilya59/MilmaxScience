@@ -1,0 +1,15 @@
+﻿@model MilmaxScience.Models.Event
+
+<h2>Подтвердить запись</h2>
+
+<div class="card p-4 shadow-sm">
+    <h4>@Model.Title</h4>
+    <p>@Model.EventDateTime.ToString("dd.MM.yyyy HH:mm")</p>
+
+    <form asp-action="ConfirmRegistration" method="post">
+        <input type="hidden" name="eventId" value="@Model.Id" />
+        <button type="submit" class="btn btn-dark">
+            Подтвердить запись
+        </button>
+    </form>
+</div>

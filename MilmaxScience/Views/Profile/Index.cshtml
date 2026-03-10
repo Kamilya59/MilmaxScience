@@ -1,0 +1,83 @@
+﻿@model ProfileViewModel
+
+@{
+    ViewData["Title"] = "Личный кабинет";
+}
+
+<div class="container mt-4">
+
+    <div class="row">
+
+        <!-- ЛЕВАЯ КОЛОНКА -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-4">
+                <h4 class="mb-3">Информация о пользователе</h4>
+
+                <p><strong>Email:</strong> @Model.User.Email</p>
+                <p><strong>Имя:</strong> @Model.User.FullName</p>
+            </div>
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА -->
+        <div class="col-md-8">
+
+            <h4 class="mb-3">Мои записи</h4>
+
+            @if (!Model.Registrations.Any())
+            {
+                <div class="alert alert-info">
+                    Вы пока никуда не записаны.
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var item in Model.Registrations)
+                    {
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body">
+
+                                    <h5>@item.Event.Title</h5>
+
+                                    <p>
+                                        <strong>Дата:</strong>
+                                        @item.Event.EventDateTime.ToShortDateString()
+                                    </p>
+
+                                    <div class="d-flex justify-content-between mt-3">
+
+                                        <!-- Перейти к мероприятию -->
+                                        <a asp-controller="Events"
+                                           asp-action="Details"
+                                           asp-route-id="@item.Event.Id"
+                                           class="btn btn-outline-dark btn-sm">
+                                            Перейти
+                                        </a>
+
+                                        <!-- Отмена записи -->
+                                        <form asp-action="CancelRegistration"
+                                              method="post">
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@item.Id" />
+
+                                            <button type="submit"
+                                                    class="btn btn-outline-danger btn-sm">
+                                                Отменить
+                                            </button>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>

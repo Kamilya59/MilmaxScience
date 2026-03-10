@@ -1,0 +1,30 @@
+.events-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.event-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 300px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+    .event-card h3 {
+        margin-top: 0;
+    }
+
+.btn-details {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #6c63ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    .btn-details:hover {
+        background-color: #5548c8;
+    }

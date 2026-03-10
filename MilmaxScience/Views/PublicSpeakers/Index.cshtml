@@ -1,0 +1,41 @@
+﻿@model IEnumerable<MilmaxScience.Models.Speaker>
+
+@{
+    ViewData["Title"] = "Лекторы";
+}
+
+<h1 class="mb-4">Лекторы</h1>
+
+<div class="row">
+    @foreach (var speaker in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+
+                @if (!string.IsNullOrEmpty(speaker.PhotoUrl))
+                {
+                    <img src="@speaker.PhotoUrl"
+                         class="card-img-top"
+                         style="height:250px; object-fit:cover;"
+                         alt="Фото">
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">
+                        @speaker.FullName
+                    </h5>
+
+                    <p class="text-muted mb-2">
+                        @speaker.City?.Name
+                    </p>
+
+                    <p class="card-text">
+                        @(speaker.Description?.Length > 120
+                                            ? speaker.Description.Substring(0, 120) + "..."
+                                            : speaker.Description)
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

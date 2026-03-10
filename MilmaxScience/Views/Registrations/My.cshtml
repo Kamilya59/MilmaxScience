@@ -1,0 +1,12 @@
+﻿@model IEnumerable<MilmaxScience.Models.Registration>
+
+<h2>Мои записи</h2>
+
+@foreach (var item in Model)
+{
+    <div class="card mb-3 shadow-sm p-3">
+        <h5>@item.Event.Title</h5>
+        <p>Город: @item.Event.City?.Name</p>
+        <p>Дата: @item.Event.EventDateTime.ToString("dd.MM.yyyy HH:mm")</p>
+    </div>
+}

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<MilmaxScience.Models.Event>
+
+@{
+    ViewData["Title"] = "Мероприятия";
+}
+
+<h1 class="mb-4">Мероприятия</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-dark mb-4">
+        Создать мероприятие
+    </a>
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="card mb-3 shadow-sm">
+        <div class="row g-0 align-items-center">
+
+            <div class="col-md-2">
+                <img src="@(string.IsNullOrEmpty(item.ImageUrl)
+                                              ? "https://via.placeholder.com/150x100"
+                                              : item.ImageUrl)"
+                     class="img-fluid rounded-start"
+                     style="max-height:120px; object-fit:cover;"
+                     alt="Event Image">
+            </div>
+
+            <div class="col-md-7">
+                <div class="card-body">
+                    <h5>@item.Title</h5>
+                    <p class="mb-1"><strong>Город:</strong> @item.City?.Name</p>
+                    <p class="mb-1"><strong>Дата:</strong> @item.EventDateTime.ToString("dd.MM.yyyy HH:mm")</p>
+                    <p class="text-muted">@item.ShortDescription</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 text-end pe-4">
+                <a asp-action="Edit"
+                   asp-route-id="@item.Id"
+                   class="btn btn-sm btn-outline-dark mb-2">
+                    Редактировать
+                </a>
+
+                <a asp-action="Delete"
+                   asp-route-id="@item.Id"
+                   class="btn btn-sm btn-outline-danger mb-2">
+                    Удалить
+                </a>
+
+                <br />
+
+                <a asp-action="Details"
+                   asp-route-id="@item.Id"
+                   class="btn btn-sm btn-dark">
+                    Подробнее
+                </a>
+            </div>
+
+        </div>
+    </div>
+}

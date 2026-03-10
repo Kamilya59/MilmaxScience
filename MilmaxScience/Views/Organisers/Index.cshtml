@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MilmaxScience.Models.Organiser>
+
+@{
+    ViewData["Title"] = "Организаторы";
+}
+
+<h1 class="mb-4">Партнеры</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-dark mb-3">
+        Добавить партнера
+    </a>
+</p>
+
+<table class="table table-hover shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Название</th>
+            <th>Логотип</th>
+            <th>Описание</th>
+            <th class="text-end">Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+
+                <td>
+                    @if (!string.IsNullOrEmpty(item.LogoUrl))
+                    {
+                        <img src="@item.LogoUrl"
+                             alt="Логотип"
+                             style="height:40px;" />
+                    }
+                </td>
+
+                <td>
+                    @(item.Description?.Length > 60
+                                    ? item.Description.Substring(0, 60) + "..." 
+                                                    : item.Description)
+                </td>
+
+                <td class="text-end">
+                    <a asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-outline-dark">
+                        Редактировать
+                    </a>
+
+                    <a asp-action="Details"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-outline-secondary">
+                        Подробнее
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-outline-danger">
+                        Удалить
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
