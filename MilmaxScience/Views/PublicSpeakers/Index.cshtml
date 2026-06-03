@@ -30,9 +30,7 @@
                     </p>
 
                     <p class="card-text">
-                        @(speaker.Description?.Length > 120
-                                            ? speaker.Description.Substring(0, 120) + "..."
-                                            : speaker.Description)
+                        @speaker.Description
                     </p>
                 </div>
             </div>

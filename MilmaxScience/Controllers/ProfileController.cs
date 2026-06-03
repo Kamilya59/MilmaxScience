@@ -21,9 +21,34 @@ namespace MilmaxScience.Controllers
             _userManager = userManager;
         }
 
-        // ==========================
-        // ЛИЧНЫЙ КАБИНЕТ
-        // ==========================
+        public async Task<IActionResult> Edit()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return View(user);
+        }
+
+           
+        [HttpPost]
+        public async Task<IActionResult> Edit(ApplicationUser model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+                return NotFound();
+
+            user.FullName = model.FullName;
+            user.Email = model.Email;
+            user.UserName = model.Email;
+
+            user.PhoneNumber = model.PhoneNumber;
+            user.BirthDate = model.BirthDate;
+
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -43,9 +68,6 @@ namespace MilmaxScience.Controllers
             return View(model);
         }
 
-        // ==========================
-        // ОТМЕНА ЗАПИСИ
-        // ==========================
         [HttpPost]
         public async Task<IActionResult> CancelRegistration(int id)
         {

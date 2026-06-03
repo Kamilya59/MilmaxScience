@@ -13,12 +13,12 @@
 
         <!-- Дата -->
         <h5 class="text-muted mb-3">
-             @Model.EventDateTime.ToString("dd.MM.yyyy HH:mm")
+            📅 @Model.EventDateTime.ToString("dd.MM.yyyy HH:mm")
         </h5>
 
         <!-- Адрес -->
         <p class="mb-4">
-             <strong>@Model.Address</strong>
+            📍 <strong>@Model.Address</strong>
         </p>
 
         <!-- ❗ ЕСЛИ АДМИН → ВСЁ -->
@@ -81,7 +81,7 @@
                     К мероприятиям
                 </a>
             }
-            else if (source == "admin")
+            else
             {
                 <a asp-controller="AdminEvents"
                    asp-action="Index"

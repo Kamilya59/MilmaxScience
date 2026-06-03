@@ -1,0 +1,27 @@
+﻿@model IEnumerable<MilmaxScience.Models.Registration>
+
+<h2 class="mb-4">Все записи</h2>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Пользователь</th>
+            <th>Email</th>
+            <th>Мероприятие</th>
+            <th>Город</th>
+            <th>Дата записи</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.User.FullName</td>
+                <td>@r.User.Email</td>
+                <td>@r.Event.Title</td>
+                <td>@r.Event.City?.Name</td>
+                <td>@r.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,84 @@
+﻿@model MilmaxScience.Models.Event
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Создание</h1>
+
+<h4>Мероприятие</h4>
+<hr />
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <form asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="Title" class="control-label">Название</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ShortDescription" class="control-label">Краткое описание</label>
+                    <input asp-for="ShortDescription" class="form-control" />
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FullDescription" class="control-label">Полное описание</label>
+                    <input asp-for="FullDescription" class="form-control" />
+                    <span asp-validation-for="FullDescription" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EventDateTime" class="control-label">Дата и время</label>
+                    <input asp-for="EventDateTime" class="form-control" />
+                    <span asp-validation-for="EventDateTime" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MaxParticipants" class="control-label">Максимально кол-во зрителей</label>
+                    <input asp-for="MaxParticipants" class="form-control" />
+                    <span asp-validation-for="MaxParticipants" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CityId" class="control-label">Город</label>
+                    <select asp-for="CityId" class="form-control" asp-items="ViewBag.CityId"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="SpeakerId" class="control-label">Спикер</label>
+                    <select asp-for="SpeakerId" class="form-control" asp-items="ViewBag.SpeakerId"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EventTypeId" class="control-label">Категория мероприятия</label>
+                    <select asp-for="EventTypeId" class="form-control" asp-items="ViewBag.EventTypeId"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="OrganiserId" class="control-label">Партнеры (Площадка)</label>
+                    <select asp-for="OrganiserId" class="form-control" asp-items="ViewBag.OrganiserId"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Address" class="control-label">Адрес</label>
+                    <input asp-for="Address" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="control-label">Адрес для изображения (Пример: \images\events\volegova.jpg ) </label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" value="Создать" class="btn btn-dark w-100" />
+                </div>
+                <div>
+                    <a class="btn btn-outline-dark" asp-action="Index">Обратно к списку</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

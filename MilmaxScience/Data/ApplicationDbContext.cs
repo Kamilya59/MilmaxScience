@@ -18,6 +18,7 @@ namespace MilmaxScience.Data
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Registration> Registrations { get; set; }
+        public DbSet<SpeakerRequest> SpeakerRequests { get; set; }
         public DbSet<SpeakerSpecialization> SpeakerSpecializations { get; set; }
     }
 }

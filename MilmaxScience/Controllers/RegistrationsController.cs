@@ -35,8 +35,24 @@ public class RegistrationsController : Controller
     {
         var user = await _userManager.GetUserAsync(User);
 
-        bool alreadyRegistered = _context.Registrations
-            .Any(r => r.UserId == user.Id && r.EventId == eventId);
+        // 🔥 1. Получаем мероприятие + регистрации
+        var eventItem = await _context.Events
+            .Include(e => e.Registrations)
+            .FirstOrDefaultAsync(e => e.Id == eventId);
+
+        if (eventItem == null)
+            return NotFound();
+
+        // 🔥 2. Проверка лимита
+        if (eventItem.Registrations.Count >= eventItem.MaxParticipants)
+        {
+            // можно редирект + сообщение позже добавить
+            return RedirectToAction("Index", "Events");
+        }
+
+        // 🔥 3. Проверка — не записан ли уже
+        bool alreadyRegistered = eventItem.Registrations
+            .Any(r => r.UserId == user.Id);
 
         if (!alreadyRegistered)
         {

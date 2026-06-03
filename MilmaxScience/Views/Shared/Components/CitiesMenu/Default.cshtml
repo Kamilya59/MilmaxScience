@@ -8,16 +8,37 @@
        data-bs-toggle="dropdown"
        aria-expanded="false">
         Города
+        @if (ViewBag.CurrentCityName != null)
+        {
+            <span class="ms-1 text-light opacity-75">
+                — @ViewBag.CurrentCityName
+            </span>
+        }
     </a>
 
-    <ul class="dropdown-menu text-white">
+    <ul class="dropdown-menu dropdown-menu-dark">
+
+        <!-- 🔥 ВСЕ -->
+        <li>
+            <a class="dropdown-item"
+               asp-controller="Events"
+               asp-action="Index"
+               asp-route-cityId=""
+               asp-route-filter="all">
+                Все
+            </a>
+        </li>
+
+        <li><hr class="dropdown-divider" /></li>
+
         @foreach (var city in Model)
         {
             <li>
                 <a class="dropdown-item"
-                   asp-controller="Home"
+                   asp-controller="Events"
                    asp-action="Index"
-                   asp-route-cityId="@city.Id">
+                   asp-route-cityId="@city.Id"
+                   asp-route-filter="all">
                     @city.Name
                 </a>
             </li>

@@ -1,0 +1,49 @@
+﻿@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Редактирование профиля";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Редактирование профиля</h2>
+
+    <div class="card shadow-sm border-0 p-4">
+
+        <form method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Имя</label>
+                <input asp-for="FullName" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+
+            <!-- ✅ Телефон -->
+            <div class="mb-3">
+                <label class="form-label">Телефон</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+
+            <!-- ✅ Дата рождения -->
+            <div class="mb-3">
+                <label class="form-label">Дата рождения</label>
+                <input asp-for="BirthDate" type="date" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-dark">
+                Сохранить
+            </button>
+
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">
+                Назад
+            </a>
+
+        </form>
+
+    </div>
+
+</div>

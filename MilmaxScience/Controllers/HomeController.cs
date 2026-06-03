@@ -28,6 +28,11 @@ namespace MilmaxScience.Controllers
         //    return View(events);
         //}
 
+        public IActionResult OrderSpeaker()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Index(int? cityId)
         {
             var cities = await _context.Cities.ToListAsync();

@@ -2,61 +2,148 @@
 
 @{
     ViewData["Title"] = "Мероприятия";
+    var currentFilter = ViewBag.CurrentFilter as string;
 }
 
 <h1 class="mb-4">Мероприятия</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-dark mb-4">
-        Создать мероприятие
+<!-- 🔥 КНОПКИ ФИЛЬТРА -->
+<div class="mb-4">
+
+    <a asp-action="Index"
+       asp-route-filter="all"
+       asp-route-cityId="@ViewBag.CurrentCity"
+       class="btn @(currentFilter == "all" ? "btn-dark" : "btn-outline-secondary")">
+        Все
     </a>
-</p>
 
-@foreach (var item in Model)
-{
-    <div class="card mb-3 shadow-sm">
-        <div class="row g-0 align-items-center">
+    <a asp-action="Index"
+       asp-route-filter="upcoming"
+       asp-route-cityId="@ViewBag.CurrentCity"
+       class="btn @(currentFilter == "upcoming" ? "btn-dark" : "btn-outline-secondary")">
+        Ближайшие
+    </a>
 
-            <div class="col-md-2">
+    <a asp-action="Index"
+       asp-route-filter="past"
+       asp-route-cityId="@ViewBag.CurrentCity"
+       class="btn @(currentFilter == "past" ? "btn-dark" : "btn-outline-secondary")">
+        Прошедшие
+    </a>
+
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var isPast = item.EventDateTime < DateTime.Now;
+        var isFull = item.Registrations != null
+        && item.Registrations.Count >= item.MaxParticipants;
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0 @(isPast ? "opacity-75" : "")">
+
                 <img src="@(string.IsNullOrEmpty(item.ImageUrl)
-                                              ? "https://via.placeholder.com/150x100"
-                                              : item.ImageUrl)"
-                     class="img-fluid rounded-start"
-                     style="max-height:120px; object-fit:cover;"
-                     alt="Event Image">
-            </div>
+                                                                          ? "https://via.placeholder.com/300x200"
+                                                                          : item.ImageUrl)"
+                     class="card-img-top"
+                     style="height:200px; object-fit:cover;" />
 
-            <div class="col-md-7">
-                <div class="card-body">
-                    <h5>@item.Title</h5>
-                    <p class="mb-1"><strong>Город:</strong> @item.City?.Name</p>
-                    <p class="mb-1"><strong>Дата:</strong> @item.EventDateTime.ToString("dd.MM.yyyy HH:mm")</p>
-                    <p class="text-muted">@item.ShortDescription</p>
+                <div class="card-body d-flex flex-column">
+
+                    <!-- 🔥 Заголовок -->
+                    <h5 class="fw-semibold">@item.Title</h5>
+
+                    <!-- 🔥 Статус -->
+                    @if (isPast)
+                    {
+                        <span class="badge bg-secondary mb-2">Прошло</span>
+                    }
+                    else
+                    {
+                        <span class="badge mb-2"
+                              style="background-color:#1f6f43;">
+                            Скоро
+                        </span>
+                    }
+
+                    <p class="mb-1 text-muted">
+                        <strong>Город:</strong> @item.City?.Name
+                    </p>
+
+                    <p class="mb-1 text-muted">
+                        <strong>Дата:</strong>
+                        @item.EventDateTime.ToString("dd.MM.yyyy HH:mm")
+                    </p>
+
+                    <p class="text-muted small">
+                        @item.ShortDescription
+                    </p>
+
+                    <!-- 🔥 КНОПКИ -->
+                    <div class="mt-auto">
+
+                        <!-- Подробнее -->
+                        <a asp-action="Details"
+                           asp-route-id="@item.Id"
+                           asp-route-source="events"
+                           class="btn w-100 mb-2"
+                           style="background-color:#6c757d; color:white;">
+                            Подробнее
+                        </a>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="Admin"
+                               asp-action="Registrations"
+                               asp-route-id="@item.Id"
+                               class="btn btn-outline-danger w-100">
+                                Управление записями
+                            </a>
+                        }
+                        else @if (@item.EventDateTime >= DateTime.UtcNow)
+                            {
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    if (isFull)
+                                    {
+                                        <span class="text-danger fw-semibold">
+                                            Билетов нет в наличии
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Registrations"
+                                           asp-action="Confirm"
+                                           asp-route-id="@item.Id"
+                                           class="btn w-100"
+                                           style="border:2px solid #1f6f43; color:#1f6f43;"
+                                           onmouseover="this.style.backgroundColor='#1f6f43'; this.style.color='white';"
+                                           onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1f6f43';">
+                                            Записаться
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a asp-area="Identity"
+                                       asp-page="/Account/Login"
+                                       class="btn btn-outline-secondary w-100">
+                                        Войти для записи
+                                    </a>
+                                }
+
+
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Регистрация закрыта</span>
+                            }
+
+
+                    </div>
                 </div>
+
             </div>
-
-            <div class="col-md-3 text-end pe-4">
-                <a asp-action="Edit"
-                   asp-route-id="@item.Id"
-                   class="btn btn-sm btn-outline-dark mb-2">
-                    Редактировать
-                </a>
-
-                <a asp-action="Delete"
-                   asp-route-id="@item.Id"
-                   class="btn btn-sm btn-outline-danger mb-2">
-                    Удалить
-                </a>
-
-                <br />
-
-                <a asp-action="Details"
-                   asp-route-id="@item.Id"
-                   class="btn btn-sm btn-dark">
-                    Подробнее
-                </a>
-            </div>
-
         </div>
-    </div>
-}
+    }
+</div>

@@ -7,61 +7,96 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MilmaxScience.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MilmaxScience</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
+            <div class="container">
+
+                <!-- ЛОГО -->
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                    MilmaxScience
+                </a>
+
+                <!-- БУРГЕР -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <!-- МЕНЮ -->
+                <div class="collapse navbar-collapse" id="mainNavbar">
+
+                    <!-- ЛЕВАЯ ЧАСТЬ -->
+                    <ul class="navbar-nav me-auto align-items-lg-center gap-lg-2">
+
                         @await Component.InvokeAsync("CitiesMenu")
 
                         <li class="nav-item">
-                            <a class="nav-link text-white"
-                               asp-controller="PublicSpeakers"
-                               asp-action="Index">
+                            <a class="nav-link px-3" asp-controller="Events" asp-action="Index">
+                                Мероприятия
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link px-3" asp-controller="PublicSpeakers" asp-action="Index">
                                 Лекторы
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3"
+                               asp-controller="Home"
+                               asp-action="OrderSpeaker">
+                                Заказать лектора
+                            </a>
+                        </li>
+
                         @if (User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                   asp-controller="Cities"
-                                   asp-action="Index">
-                                    Управление городами
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle px-3" href="#" role="button" data-bs-toggle="dropdown">
+                                    Админка
                                 </a>
+
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Cities" asp-action="Index">
+                                            Города
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Speakers" asp-action="Index">
+                                            Лекторы
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminEvents" asp-action="Index">
+                                            Мероприятия
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="EventTypes" asp-action="Index">
+                                            Категории
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Organisers" asp-action="Index">
+                                            Партнёры
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         }
 
-                        @if (User.IsInRole("Admin"))
-{
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="Speakers" asp-action="Index">Управление лекторами</a>
-                        </li>
-}
-                        @if (User.IsInRole("Admin"))
-                            {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Events" asp-action="Index">Мероприятия</a>
-                            </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" asp-controller="EventTypes" asp-action="Index">Категории мероприятий</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" asp-controller="Organisers" asp-action="Index">Партнеры</a>
-                                </li>
-                            }
-                        </ul>
-                    <div class="ms-auto">
-                        <partial name="_LoginPartial"/>
+                    </ul>
+
+                    <!-- ПРАВАЯ ЧАСТЬ -->
+                    <div class="d-flex align-items-center gap-2">
+                        <partial name="_LoginPartial" />
                     </div>
+
                 </div>
             </div>
         </nav>
@@ -72,14 +107,56 @@
             @RenderBody()
         </div>
     </main>
-    
-    <footer class="border-top text-muted  mt-auto">
-        <div class="container text-center">
-            © 2026 - MilmaxScience |
-            <a href="https://vk.com/milmax_production">VK</a> |
-            <a href="https://t.me/milmax_production">Telegram</a>
+    <footer class="bg-dark text-light mt-auto">
+        <div class="container py-4">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+
+                    <h5 class="fw-bold mb-1">
+                        MilmaxScience
+                    </h5>
+
+                    <small class="text-secondary">
+                        Научно-популярный лекторий. Лекции, встречи с экспертами и популяризация науки.
+                    </small>
+
+                </div>
+
+                <div class="col-md-6 text-center text-md-end">
+
+                    <a href="https://vk.com/milmax_production"
+                       target="_blank"
+                       class="text-light fs-3 me-3">
+                        <i class="fab fa-vk"></i>
+                    </a>
+
+                    <a href="https://t.me/milmax_production"
+                       target="_blank"
+                       class="text-light fs-3 me-3">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+
+                    <a href="mailto:milmax.production@gmail.com"
+                       class="text-light fs-3">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <hr class="border-secondary my-3">
+
+            <div class="text-center text-secondary small">
+                © 2026 MilmaxScience. Все права защищены.
+            </div>
+
         </div>
+
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

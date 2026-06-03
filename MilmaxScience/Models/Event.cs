@@ -15,6 +15,8 @@ namespace MilmaxScience.Models
 
         public string FullDescription { get; set; }
 
+        public string? Address { get; set; }
+
         [Required]
         public DateTime EventDateTime { get; set; }
 

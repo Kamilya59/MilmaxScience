@@ -28,3 +28,24 @@
     .btn-details:hover {
         background-color: #5548c8;
     }
+
+
+body {
+    padding-top: 70px;
+}
+
+body {
+    background: url('\images\bg\galaxy-night-landscape.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+.btn {
+    transition: all 0.2s ease;
+}
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+
+

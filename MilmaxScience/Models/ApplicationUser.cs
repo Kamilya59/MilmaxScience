@@ -12,3 +12,4 @@ public class ApplicationUser : IdentityUser
     [DataType(DataType.Date)]
     public DateTime BirthDate { get; set; }
 }
+

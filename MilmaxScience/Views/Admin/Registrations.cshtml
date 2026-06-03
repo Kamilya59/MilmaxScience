@@ -2,6 +2,12 @@
 
 <h2>Записи на мероприятие</h2>
 
+<div class="mb-3">
+    <span class="badge bg-dark fs-6">
+        @ViewBag.Count / @ViewBag.Max участников
+    </span>
+</div>
+
 <table class="table table-hover">
     <thead class="table-dark">
         <tr>
@@ -21,3 +27,9 @@
         }
     </tbody>
 </table>
+
+<a asp-controller="Events"
+   asp-action="Index"
+   class="btn btn-secondary mt-3">
+    Назад
+</a>

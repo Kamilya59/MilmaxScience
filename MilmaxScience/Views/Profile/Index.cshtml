@@ -6,78 +6,106 @@
 
 <div class="container mt-4">
 
-    <div class="row">
+    <!-- 🔥 ПРОФИЛЬ (ХЕДЕР) -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
 
-        <!-- ЛЕВАЯ КОЛОНКА -->
-        <div class="col-md-4">
-            <div class="card shadow-sm p-4">
-                <h4 class="mb-3">Информация о пользователе</h4>
+            <div>
+                <h3 class="mb-1">@Model.User.FullName</h3>
+                <p class="text-muted mb-2">@Model.User.Email</p>
 
-                <p><strong>Email:</strong> @Model.User.Email</p>
-                <p><strong>Имя:</strong> @Model.User.FullName</p>
+                <!-- мотивация -->
+                <small class="text-muted">
+                    Наука — это способ изменить мир. Продолжай исследовать!
+                </small>
             </div>
-        </div>
 
-        <!-- ПРАВАЯ КОЛОНКА -->
-        <div class="col-md-8">
-
-            <h4 class="mb-3">Мои записи</h4>
-
-            @if (!Model.Registrations.Any())
-            {
-                <div class="alert alert-info">
-                    Вы пока никуда не записаны.
-                </div>
-            }
-            else
-            {
-                <div class="row">
-                    @foreach (var item in Model.Registrations)
-                    {
-                        <div class="col-md-6 mb-4">
-                            <div class="card shadow-sm h-100">
-                                <div class="card-body">
-
-                                    <h5>@item.Event.Title</h5>
-
-                                    <p>
-                                        <strong>Дата:</strong>
-                                        @item.Event.EventDateTime.ToShortDateString()
-                                    </p>
-
-                                    <div class="d-flex justify-content-between mt-3">
-
-                                        <!-- Перейти к мероприятию -->
-                                        <a asp-controller="Events"
-                                           asp-action="Details"
-                                           asp-route-id="@item.Event.Id"
-                                           class="btn btn-outline-dark btn-sm">
-                                            Перейти
-                                        </a>
-
-                                        <!-- Отмена записи -->
-                                        <form asp-action="CancelRegistration"
-                                              method="post">
-                                            <input type="hidden"
-                                                   name="id"
-                                                   value="@item.Id" />
-
-                                            <button type="submit"
-                                                    class="btn btn-outline-danger btn-sm">
-                                                Отменить
-                                            </button>
-                                        </form>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
+            <div>
+                <a asp-action="Edit"
+                   class="btn btn-outline-dark">
+                    Редактировать профиль
+                </a>
+            </div>
 
         </div>
-
     </div>
+
+    <!-- 🔥 МОТИВАЦИОННЫЙ БЛОК -->
+    <div class="card border-0 mb-5" style="background:#f8f9fa;">
+        <div class="card-body text-center">
+            <h5 class="mb-2">Твоя научная активность</h5>
+            <p class="text-muted mb-0">
+                Ты записан на <strong>@Model.Registrations.Count()</strong> мероприятий.
+                Не останавливайся — знания ждут тебя!
+            </p>
+        </div>
+    </div>
+
+    <!-- 🔥 МОИ ЗАПИСИ -->
+    <h4 class="mb-3">Мои записи</h4>
+
+    @if (!Model.Registrations.Any())
+    {
+        <div class="alert alert-info">
+            Вы пока никуда не записаны.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var item in Model.Registrations)
+            {
+                var isPast = item.Event.EventDateTime < DateTime.Now;
+
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0 @(isPast ? "opacity-75" : "")">
+
+                        <div class="card-body d-flex flex-column">
+
+                            <h5>@item.Event.Title</h5>
+
+                            <p class="text-muted mb-1">
+                                @item.Event.EventDateTime.ToString("dd.MM.yyyy")
+                            </p>
+
+                            @if (isPast)
+                            {
+                                <span class="badge bg-secondary mb-2">Прошло</span>
+                            }
+                            else
+                            {
+                                <span class="badge mb-2" style="background:#1f6f43;">
+                                    Скоро
+                                </span>
+                            }
+
+                            <div class="mt-auto d-flex justify-content-between">
+
+                                <a asp-controller="Events"
+                                   asp-action="Details"
+                                   asp-route-id="@item.Event.Id"
+                                   asp-route-source="profile"
+                                   class="btn btn-sm"
+                                   style="background:#6c757d; color:white;">
+                                    Перейти
+                                </a>
+
+                                <form asp-action="CancelRegistration" method="post">
+                                    <input type="hidden" name="id" value="@item.Id" />
+
+                                    <button type="submit"
+                                            class="btn btn-outline-danger btn-sm">
+                                        Отменить
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
 </div>
