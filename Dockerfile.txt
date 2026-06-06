@@ -3,8 +3,8 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore "MilmaxScience.csproj"
-RUN dotnet publish "MilmaxScience.csproj" -c Release -o /app/publish
+RUN dotnet restore MilmaxScience/MilmaxScience.csproj
+RUN dotnet publish MilmaxScience/MilmaxScience.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview
 WORKDIR /app
