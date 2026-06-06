@@ -1,3 +1,7 @@
 <Solution>
+  <Folder Name="/Элементы решения/">
+    <File Path=".dockerignore" />
+    <File Path="Dockerfile.txt" />
+  </Folder>
   <Project Path="MilmaxScience/MilmaxScience.csproj" />
 </Solution>

@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Dockerfile" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="C:\Users\kamil\source\repos\MilmaxScience\MilmaxScience\.editorconfig" />
   </ItemGroup>
 
