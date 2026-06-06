@@ -15,13 +15,14 @@ namespace MilmaxScience.Models
 
         public string FullDescription { get; set; }
 
-        public string? Address { get; set; }
 
         [Required]
         public DateTime EventDateTime { get; set; }
 
         public int? MaxParticipants { get; set; }
         public string? ImageUrl { get; set; }
+
+        public string? Address { get; set; }
 
         // Связи
 
