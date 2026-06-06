@@ -39,7 +39,7 @@
         </div>
     </div>
 
-@*     <div class="card shadow-sm border-0 mb-5">
+    <div class="card shadow-sm border-0 mb-5">
 
         <div class="card-body p-4">
 
@@ -52,12 +52,27 @@
                 и мы свяжемся с вами для обсуждения деталей.
             </p>
 
-            <form>
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <form asp-action="OrderSpeaker" method="post">
 
                 <div class="row">
 
                     <div class="col-md-8 mb-3">
                         <input type="text"
+                               name="contact"
                                class="form-control form-control-lg"
                                placeholder="Телефон или e-mail">
                     </div>
@@ -75,7 +90,7 @@
 
         </div>
 
-    </div> *@
+    </div>
 
     <div class="card shadow-sm border-0">
 

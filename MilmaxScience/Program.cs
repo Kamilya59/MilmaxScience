@@ -20,7 +20,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddSingleton<IdentityErrorDescriber, LocalizedIdentityErrorDescriber>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<MilmaxScience.Data.ApplicationDbContext>();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Lockout.MaxFailedAccessAttempts = 6;
+    options.Lockout.DefaultLockoutTimeSpan =
+        TimeSpan.FromMinutes(15);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,6 +50,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider
+        .GetRequiredService<ApplicationDbContext>();
+
+    await db.Database.MigrateAsync();
+}
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

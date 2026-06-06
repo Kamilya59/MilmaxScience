@@ -1,0 +1,32 @@
+﻿@model IEnumerable<MilmaxScience.Models.SpeakerRequest>
+
+<h2 class="mb-4">Заказы лектора</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Пока нет ни одной заявки.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Контакт</th>
+                <th>Дата заявки</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.Id</td>
+                    <td>@request.Contact</td>
+                    <td>@request.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

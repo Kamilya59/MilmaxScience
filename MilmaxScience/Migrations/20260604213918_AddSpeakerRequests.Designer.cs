@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MilmaxScience.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260603191036_AddSpeakerRequests")]
+    [Migration("20260604213918_AddSpeakerRequests")]
     partial class AddSpeakerRequests
     {
         /// <inheritdoc />
